@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:focusable="true"
+	 android:background="#eeeeee"
+	>
+	<TextView android:layout_width="wrap_content" android:textColor="#333"
+		android:layout_height="wrap_content" android:text="Training Set:\t"
+		android:id="@+id/trainingSetLabel" android:layout_below="@+id/seekBar1" />
+	<TextView android:layout_toRightOf="@+id/trainingSetLabel" android:textColor="#333"
+		android:id="@+id/activeTrainingSet" android:layout_below="@+id/seekBar1"
+		android:layout_height="wrap_content" android:text="default"
+		android:layout_width="wrap_content"></TextView>
+	<EditText android:id="@+id/trainingSetName" android:textColor="#cfcfcf"
+		android:layout_height="wrap_content" android:background="@android:drawable/editbox_background"
+		android:inputType="text" android:text="default" android:layout_below="@id/trainingSetLabel"
+		android:layout_width="fill_parent" android:layout_toRightOf="@+id/startNewSetButton" />
+	<TextView android:layout_height="wrap_content" android:textColor="#333"
+		android:layout_width="wrap_content" android:text="Gesture Name:" 
+		android:id="@+id/gestureLabel" android:layout_below="@+id/startNewSetButton"></TextView>
+	<EditText android:id="@+id/gestureName" android:layout_width="fill_parent" android:textColor="#cfcfcf"
+		android:layout_height="wrap_content" android:background="@android:drawable/editbox_background"
+		android:inputType="text" android:text="gesture0" android:layout_below="@+id/gestureLabel" />
+	<Button android:id="@+id/startNewSetButton"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textSize="16sp" android:textColor="#fff" android:background="#1E88E5" 
+		android:layout_alignLeft="@id/gestureName" android:text="Change Training Set"
+		android:layout_below="@+id/trainingSetLabel" android:layout_margin="5dp"
+		/>
+	<Button android:id="@+id/trainButton" android:layout_width="wrap_content"
+	    android:textSize="16sp" android:textColor="#fff" android:background="#1E88E5" 
+		android:layout_height="wrap_content" android:layout_below="@+id/gestureName"
+		android:text="Start Training" android:layout_margin="5dp" />
+	<Button android:id="@+id/deleteTrainingSetButton"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textSize="16sp" android:textColor="#fff" android:background="#1E88E5" 
+		android:layout_below="@id/gestureName" android:layout_toRightOf="@id/trainButton"
+		android:text="Delete Training Set" android:layout_margin="5dp" />
+
+	<SeekBar
+	    android:id="@+id/seekBar1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentTop="true" />
+
+
+</RelativeLayout>

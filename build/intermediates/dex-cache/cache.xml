@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="F:\Collage\Final Project\StudioWork\app\libs\mpandroidchartlibrary-1-7-4.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c685e45ac6491e51640ce3571606ac22dfd4a6a3">
+        <dex dex="F:\Collage\Final Project\StudioWork\app\build\intermediates\pre-dexed\debug\mpandroidchartlibrary-1-7-4-2bcc06b643bca17c91a2ccd7ef86e9b9f46d0414.jar" />
+    </item>
+    <item
+        jar="F:\Collage\Final Project\StudioWork\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="F:\Collage\Final Project\StudioWork\app\build\intermediates\pre-dexed\debug\classes-389f2a1c894ce744e691f25ef88323ef766185ec.jar" />
+    </item>
+    <item
+        jar="F:\Collage\Final Project\StudioWork\app\libs\GraphView-4.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="20768335ab718b2a912f9155f9d1893d5fc931ce">
+        <dex dex="F:\Collage\Final Project\StudioWork\app\build\intermediates\pre-dexed\debug\GraphView-4.0.0-930edb1ccf5bcbd54047fb894ec2e1e60346c3d9.jar" />
+    </item>
+    <item
+        jar="C:\Development\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\21.0.3\support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="F:\Collage\Final Project\StudioWork\app\build\intermediates\pre-dexed\debug\support-annotations-21.0.3-38ee077a6416da73b576df59e67017d0105f7859.jar" />
+    </item>
+    <item
+        jar="F:\Collage\Final Project\StudioWork\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\libs\internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="F:\Collage\Final Project\StudioWork\app\build\intermediates\pre-dexed\debug\internal_impl-21.0.3-214ba06397755a300ee6f96ec0e31afcba64dae3.jar" />
+    </item>
+    <item
+        jar="F:\Collage\Final Project\StudioWork\app\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="F:\Collage\Final Project\StudioWork\app\build\intermediates\pre-dexed\debug\classes-eef20b775e96cade27ce82bbc7bd4fcb2b68e41e.jar" />
+    </item>
+
+</items>
