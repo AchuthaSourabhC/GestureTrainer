@@ -72,7 +72,7 @@ public class DTWAlgorithm {
 			}
 		}
 
-		// genetischer Algorithmus um den günstigsten Pfad zu finden
+
 		for (int i = 0; i < signal1Length; ++i) {
 			costMatrix[i][0] = distMatrix[i][0];
 		}

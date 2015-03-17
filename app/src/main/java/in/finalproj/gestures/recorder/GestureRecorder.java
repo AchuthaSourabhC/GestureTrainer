@@ -12,6 +12,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.widget.Toast;
 
 public class GestureRecorder implements SensorEventListener {
 
@@ -19,8 +20,8 @@ public class GestureRecorder implements SensorEventListener {
 		MOTION_DETECTION, PUSH_TO_GESTURE
 	};
 
-	final int MIN_GESTURE_SIZE = 8;
-	float THRESHOLD = 2;
+	final int MIN_GESTURE_SIZE = 12;
+	float THRESHOLD = 1.5f;
 	SensorManager sensorManager;
 	boolean isRecording;
 
@@ -104,7 +105,7 @@ public class GestureRecorder implements SensorEventListener {
 			}
 			if (stepsSinceNoMovement == 10) {
 
-				System.out.println("Length is: " + String.valueOf(gestureValues.size() - 10));
+				//System.out.println("Length is: " + String.valueOf(gestureValues.size() - 10));
 				if (gestureValues.size() - 10 > MIN_GESTURE_SIZE) {
 					listener.onGestureRecorded(gestureValues.subList(0, gestureValues.size() - 10));
 				}

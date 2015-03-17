@@ -17,6 +17,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.widget.Toast;
 
 
 public class GestureRecognitionService extends Service implements GestureRecorderListener {
@@ -26,6 +27,7 @@ public class GestureRecognitionService extends Service implements GestureRecorde
 	String activeTrainingSet;
 	String activeLearnLabel;
 	boolean isLearning, isClassifying;
+    int MAX_DISTANCE = 200;
 
 	Set<IGestureRecognitionListener> listeners = new HashSet<IGestureRecognitionListener>();
 
@@ -136,6 +138,7 @@ public class GestureRecognitionService extends Service implements GestureRecorde
 
 			classifier.trainData(activeTrainingSet, new Gesture(values, activeLearnLabel));
 			classifier.commitData();
+            Toast.makeText(getBaseContext(), "" + values.size(), Toast.LENGTH_LONG).show();
 			for (IGestureRecognitionListener listener : listeners) {
 				try {
 					listener.onGestureLearned(activeLearnLabel);
@@ -149,7 +152,7 @@ public class GestureRecognitionService extends Service implements GestureRecorde
 			recorder.pause(true);
 			Distribution distribution = classifier.classifySignal(activeTrainingSet, new Gesture(values, null));
 			recorder.pause(false);
-			if (distribution != null && distribution.size() > 0) {
+			if (distribution != null && distribution.size() > 0 && distribution.getBestDistance() < MAX_DISTANCE ) {
 				for (IGestureRecognitionListener listener : listeners) {
 					try {
 						listener.onGestureRecognized(distribution);

@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -30,7 +31,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -48,10 +51,10 @@ import in.finalproj.gestures.IGestureRecognitionListener;
 import in.finalproj.gestures.IGestureRecognitionService;
 import in.finalproj.gestures.classifier.Distribution;
 
-public class GestureTrainer extends Activity {
+public class GestureTrainer extends Activity implements TextToSpeech.OnInitListener {
 
 	IGestureRecognitionService recognitionService;
-	String activeTrainingSet;
+	String activeTrainingSet, sText;
 	List<Gesture> trainingSet = Collections.emptyList();
 	List<Gesture> trainingSetData = Collections.emptyList();
 	Gesture signal;
@@ -59,6 +62,7 @@ public class GestureTrainer extends Activity {
 	GraphView graph;
 	TextView datatv;
 	LineChart mChart;
+    private TextToSpeech tts;
 	
 	@SuppressWarnings("unchecked")
 	public void loadTrainingSet(String trainingSetName) {
@@ -81,8 +85,14 @@ public class GestureTrainer extends Activity {
 		
 	}
 
+    private void speakOut(String text) {
 
-	private final ServiceConnection serviceConnection = new ServiceConnection() {
+
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+
+        private final ServiceConnection serviceConnection = new ServiceConnection() {
 
 		@Override
 		public void onServiceConnected(ComponentName className, IBinder service) {
@@ -109,13 +119,12 @@ public class GestureTrainer extends Activity {
 		public void onGestureLearned(String gestureName) throws RemoteException {
 			
 			Toast.makeText(GestureTrainer.this, String.format("Gesture %s learned", gestureName), Toast.LENGTH_SHORT).show();
-			System.err.println("Gesture %s learned");
+            speakOut("Gesture "+ gestureName +" learned");
 		}
 
 		@Override
 		public void onTrainingSetDeleted(String trainingSet) throws RemoteException {
 			Toast.makeText(GestureTrainer.this, String.format("Training set %s deleted", trainingSet), Toast.LENGTH_SHORT).show();
-			System.err.println(String.format("Training set %s deleted", trainingSet));
 		}
 
 		@Override
@@ -123,9 +132,9 @@ public class GestureTrainer extends Activity {
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					
-					Toast.makeText(GestureTrainer.this, String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_LONG).show();
-					System.err.println(String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()));
+					sText = distribution.getBestMatch();
+					Toast.makeText(GestureTrainer.this, String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_SHORT).show();
+                    speakOut(sText);
 				}
 			});
 		}
@@ -146,6 +155,8 @@ public class GestureTrainer extends Activity {
 		final Button deleteTrainingSetButton = (Button) findViewById(R.id.deleteTrainingSetButton);
 		final Button changeTrainingSetButton = (Button) findViewById(R.id.startNewSetButton);
 		activeTrainingSet = "default";
+        sText = activeTrainingSet;
+        tts = new TextToSpeech(this, this);
 		final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar1);
 		loadTrainingSet(activeTrainingSet);
 		seekBar.setVisibility(View.INVISIBLE);
@@ -289,4 +300,34 @@ public class GestureTrainer extends Activity {
 		bindService(bindIntent, serviceConnection, Context.BIND_AUTO_CREATE);
 		super.onResume();
 	}
+
+
+    @Override
+    public void onDestroy() {
+        // Don't forget to shutdown tts!
+        if (tts != null) {
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onDestroy();
+    }
+
+    @Override
+    public void onInit(int status) {
+        if (status == TextToSpeech.SUCCESS) {
+
+            int result = tts.setLanguage(Locale.US);
+
+            if (result == TextToSpeech.LANG_MISSING_DATA
+                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "This Language is not supported");
+            } else {
+
+                speakOut(sText);
+            }
+
+        } else {
+            Log.e("TTS", "Initilization Failed!");
+        }
+    }
 }
