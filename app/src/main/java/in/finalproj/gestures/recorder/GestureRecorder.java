@@ -21,7 +21,7 @@ public class GestureRecorder implements SensorEventListener {
 	};
 
 	final int MIN_GESTURE_SIZE = 12;
-	float THRESHOLD = 1.5f;
+	float THRESHOLD = 3.0f;
 	SensorManager sensorManager;
 	boolean isRecording;
 
@@ -103,7 +103,7 @@ public class GestureRecorder implements SensorEventListener {
 				gestureValues = new ArrayList<float[]>();
 				gestureValues.add(value);
 			}
-			if (stepsSinceNoMovement == 10) {
+			if (stepsSinceNoMovement == 15) {
 
 				//System.out.println("Length is: " + String.valueOf(gestureValues.size() - 10));
 				if (gestureValues.size() - 10 > MIN_GESTURE_SIZE) {
@@ -134,7 +134,7 @@ public class GestureRecorder implements SensorEventListener {
 
 	public void start() {
 		sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-		sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+		sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
 		isRunning = true;
 	}
 
@@ -152,7 +152,7 @@ public class GestureRecorder implements SensorEventListener {
 		if (b) {
 			sensorManager.unregisterListener(this);
 		} else {
-			sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+			sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_UI);
 		}
 	}
 

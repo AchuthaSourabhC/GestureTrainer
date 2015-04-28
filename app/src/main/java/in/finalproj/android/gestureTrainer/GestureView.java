@@ -36,6 +36,34 @@ public class GestureView extends Activity {
 	}
 	
 	private void setGraphData(Gesture signal) {
+        /*
+        ArrayList<String> xVals = new ArrayList<String>();
+
+        for (int i = 0; i < signal.length(); i++) {
+            xVals.add(signal.getValue(i, 0) + "");
+        }
+
+        ArrayList<Entry> yVals = new ArrayList<Entry>();
+        for (int i = 0; i < signal.length(); i++) {
+            yVals.add(new Entry(signal.getValue(i, 2), i));
+        }
+        LineDataSet set1 = new LineDataSet(yVals, "x-axis");
+
+        set1.setColor(ColorTemplate.getHoloBlue());
+        set1.setCircleColor(ColorTemplate.getHoloBlue());
+        set1.setLineWidth(2f);
+        set1.setCircleSize(4f);
+        set1.setFillAlpha(65);
+        set1.setFillColor(ColorTemplate.getHoloBlue());
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(set1); // add the datasets
+
+        // create a data object with the datasets
+        LineData data = new LineData(xVals, dataSets);
+        mChart.setYRange(-20, 20, false);
+        // set data
+        mChart.setData(data);*/
 
         ArrayList<String> xVals = new ArrayList<String>();
         for (int i = 0; i < signal.length(); i++) {
@@ -91,6 +119,7 @@ public class GestureView extends Activity {
         mChart.setYRange(-20, 20, false);
         // set data
         mChart.setData(data);
+
     }
 	
 	private void toastGesture(Gesture signal){

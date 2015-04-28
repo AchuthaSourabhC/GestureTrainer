@@ -17,6 +17,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.Log;
 import android.widget.Toast;
 
 
@@ -27,11 +28,12 @@ public class GestureRecognitionService extends Service implements GestureRecorde
 	String activeTrainingSet;
 	String activeLearnLabel;
 	boolean isLearning, isClassifying;
-    int MAX_DISTANCE = 200;
+    int MAX_DISTANCE = 180;
 
 	Set<IGestureRecognitionListener> listeners = new HashSet<IGestureRecognitionListener>();
 
-	IBinder gestureRecognitionServiceStub = new IGestureRecognitionService.Stub() {
+
+    IBinder gestureRecognitionServiceStub = new IGestureRecognitionService.Stub() {
 
 		@Override
 		public void deleteTrainingSet(String trainingSetName) throws RemoteException {
@@ -129,6 +131,11 @@ public class GestureRecognitionService extends Service implements GestureRecorde
 	public void onCreate() {
 		recorder = new GestureRecorder(this);
 		classifier = new GestureClassifier(new NormedGridExtractor(), this);
+        activeTrainingSet = "default";
+        isClassifying = true;
+        recorder.start();
+        classifier.loadTrainingSet(activeTrainingSet);
+
 		super.onCreate();
 	}
 
@@ -138,7 +145,7 @@ public class GestureRecognitionService extends Service implements GestureRecorde
 
 			classifier.trainData(activeTrainingSet, new Gesture(values, activeLearnLabel));
 			classifier.commitData();
-            Toast.makeText(getBaseContext(), "" + values.size(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Gesture Learnt : " + values.size(), Toast.LENGTH_LONG).show();
 			for (IGestureRecognitionListener listener : listeners) {
 				try {
 					listener.onGestureLearned(activeLearnLabel);
@@ -155,7 +162,10 @@ public class GestureRecognitionService extends Service implements GestureRecorde
 			if (distribution != null && distribution.size() > 0 && distribution.getBestDistance() < MAX_DISTANCE ) {
 				for (IGestureRecognitionListener listener : listeners) {
 					try {
-						listener.onGestureRecognized(distribution);
+                        /*
+                        Toast.makeText(getBaseContext(), distribution.getBestMatch() + " : " + distribution.getBestDistance(), Toast.LENGTH_SHORT).show();*/
+                        Log.d("debug", distribution.getBestMatch() + " : " + distribution.getBestDistance());
+                        listener.onGestureRecognized(distribution);
 					} catch (RemoteException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -174,5 +184,6 @@ public class GestureRecognitionService extends Service implements GestureRecorde
 	public GestureClassifier getClassifier(){
 		return classifier;
 	}
+
 
 }

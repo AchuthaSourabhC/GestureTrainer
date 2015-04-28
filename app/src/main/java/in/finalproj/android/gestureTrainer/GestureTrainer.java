@@ -117,9 +117,7 @@ public class GestureTrainer extends Activity implements TextToSpeech.OnInitListe
 
 		@Override
 		public void onGestureLearned(String gestureName) throws RemoteException {
-			
-			Toast.makeText(GestureTrainer.this, String.format("Gesture %s learned", gestureName), Toast.LENGTH_SHORT).show();
-            speakOut("Gesture "+ gestureName +" learned");
+	        speakOut("Gesture "+ gestureName +" learned");
 		}
 
 		@Override
@@ -133,7 +131,7 @@ public class GestureTrainer extends Activity implements TextToSpeech.OnInitListe
 				@Override
 				public void run() {
 					sText = distribution.getBestMatch();
-					Toast.makeText(GestureTrainer.this, String.format("%s: %f", distribution.getBestMatch(), distribution.getBestDistance()), Toast.LENGTH_SHORT).show();
+					Toast.makeText(GestureTrainer.this, String.format("%s", distribution.getBestMatch()), Toast.LENGTH_SHORT).show();
                     speakOut(sText);
 				}
 			});
@@ -179,12 +177,7 @@ public class GestureTrainer extends Activity implements TextToSpeech.OnInitListe
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 
-				try {
-					recognitionService.setThreshold(progress / 10.0f);
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
 
 			}
 		});
@@ -286,7 +279,7 @@ public class GestureTrainer extends Activity implements TextToSpeech.OnInitListe
 		try {
 			recognitionService.unregisterListener(IGestureRecognitionListener.Stub.asInterface(gestureListenerStub));
 		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		recognitionService = null;
